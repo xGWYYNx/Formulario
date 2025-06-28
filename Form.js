@@ -1,39 +1,31 @@
-const express = require('express');
-const nodemailer = require('nodemailer');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-
-/*
-    To send form data from form.html to an email, you need a backend service.
-    Below is a simple example using Node.js with Express and Nodemailer.
-    This code is for Form.js (your backend handler).
-    Make sure to install express and nodemailer: 
-        npm install express nodemailer body-parser cors
-*/
-
-
-const app = express();
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// Configure your email transport
-const transporter = nodemailer.createTransport({
-    service: 'gmail', // or your email provider
-    auth: {
-        user: 'your_email@gmail.com',
-        pass: 'your_email_password'
-    }
-});
+// ...existing code...
 
 app.post('/send-form', (req, res) => {
-    const { name, email, message } = req.body; // Adjust fields as per your form
+    // Get all fields from the request body
+    const {
+        name, age, gender, education, occupation, date,
+        email, phone, city, marital_status, income, comments
+    } = req.body;
 
+    // Build the email content with all fields
     const mailOptions = {
         from: email,
-        to: 'destination_email@example.com',
-        subject: 'New Form Submission',
-        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+        to: 'elviolapablos@gmail.com', // 
+        subject: 'Nuevo envío de formulario de muestra estadística',
+        text: `
+Nombre: ${name}
+Edad: ${age}
+Género: ${gender}
+Nivel de Educación: ${education}
+Ocupación: ${occupation}
+Fecha de Participación: ${date}
+Correo electrónico: ${email}
+Teléfono: ${phone}
+Ciudad: ${city}
+Estado civil: ${marital_status}
+Ingresos mensuales (COP): ${income}
+Comentarios adicionales: ${comments}
+        `
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -44,6 +36,4 @@ app.post('/send-form', (req, res) => {
     });
 });
 
-app.listen(3001, () => {
-    console.log('Server running on port 3001');
-});
+// ...existing code...

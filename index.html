@@ -98,8 +98,7 @@
 
         const result = await response.json();
         if (result.success) {
-            alert('¡Formulario enviado correctamente!');
-            this.reset();
+            window.location.href = "cupon.html"; // Redirige al cupón
         } else {
             alert('Error al enviar el formulario: ' + result.error);
         }

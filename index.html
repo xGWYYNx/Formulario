@@ -9,7 +9,7 @@
 <body>
     <section id="Formulario">
         <h1>Formulario de Muestra Estadística</h1>
-        <form action="#" method="post">
+        <form id="myForm" method="post">
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
             <br><br>
@@ -81,7 +81,30 @@
         </form>
     </section>
 
-    <script src="Form.js" defer></script>  
+    <script src="Form.js" defer></script>
+    <script src="forms.js" defer></script>
+    <script>
+    document.getElementById("myForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => data[key] = value);
+
+        const response = await fetch('http://localhost:3001/send-form', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert('¡Formulario enviado correctamente!');
+            this.reset();
+        } else {
+            alert('Error al enviar el formulario: ' + result.error);
+        }
+    });
+    </script>  
 
 
     

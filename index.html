@@ -9,7 +9,7 @@
 <body>
     <section id="Formulario">
         <h1>Formulario de Muestra Estadística</h1>
-        <form id="myForm" method="post">
+        <form id="myForm" >
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
             <br><br>
@@ -98,7 +98,7 @@
 
         const result = await response.json();
         if (result.success) {
-            window.location.href = "cupon.html"; // Redirige al cupón
+            window.location.href = "cupon.html";
         } else {
             alert('Error al enviar el formulario: ' + result.error);
         }
